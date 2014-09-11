@@ -3,6 +3,7 @@ package com.yabe.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -21,20 +22,37 @@ public class AppTest extends TestCase {
 		return new TestSuite(AppTest.class);
 	}
 
+
 	public void testAdd() {
 		UserService service = new UserService();
+		String tel = "";
+		List<String> contacts;
+		/**
+		 * 用户13601
+		 * 通讯录：
+		 * 		13602
+		 * 		13603
+		 * 		13604
+		 */
+//		tel = "13601";
+//		contacts = new ArrayList<String>();
+//		contacts.add("13602");
+//		contacts.add("13603");
+//		contacts.add("13604");
+//		String u1 = service.add(tel, contacts);
+		String u1 = "38";
+		/**
+		 * 用户13602
+		 * 通讯录：
+		 * 		13601
+		 */
+		tel = "13602";
+		contacts = new ArrayList<String>();
+		contacts.add("13601");
+		String u2 = service.add(tel, contacts);
 		
-		String tel = "10000000000";
-		List<String> contacts = new ArrayList<String>();
-		contacts.add("10000000001");
-		contacts.add("10000000002");
-		contacts.add("10000000003");
-		contacts.add("10000000004");
-		
-		long st = System.currentTimeMillis();
-		service.add(tel, contacts);
-		System.out.println(System.currentTimeMillis()-st);
-		
+		Assert.assertTrue(service.findFans(u1).contains(u2));
+		Assert.assertTrue(service.findFans(u2).contains(u1));
 	}
 	
 	public void testPublishGoods() {
