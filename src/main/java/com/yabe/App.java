@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class App {
 	public static void main(String[] args) {
-		UserService service = new UserService();
+		SNSService service = new SNSService();
 		
 		String tel = "10000000000";
 		List<String> contacts = new ArrayList<String>();
