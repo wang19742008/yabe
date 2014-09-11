@@ -38,8 +38,7 @@ public class UserService {
 	 */
 	public String add(String tel, List<String> contacts){
 		//生成新用户
-		//String userId = String.valueOf(new Random().nextInt(100));
-		String userId = "13";
+		String userId = String.valueOf(new Random().nextInt(100));
 		// build <d>
 		jedis.set(KEY_USERTEL_PRE+tel, userId);
 		// build <a>

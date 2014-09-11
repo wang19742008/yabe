@@ -34,13 +34,12 @@ public class AppTest extends TestCase {
 		 * 		13603
 		 * 		13604
 		 */
-//		tel = "13601";
-//		contacts = new ArrayList<String>();
-//		contacts.add("13602");
-//		contacts.add("13603");
-//		contacts.add("13604");
-//		String u1 = service.add(tel, contacts);
-		String u1 = "38";
+		tel = "13601";
+		contacts = new ArrayList<String>();
+		contacts.add("13602");
+		contacts.add("13603");
+		contacts.add("13604");
+		String u1 = service.add(tel, contacts);
 		/**
 		 * 用户13602
 		 * 通讯录：
