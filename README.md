@@ -2,6 +2,12 @@ yabe
 ====
 SNS关系实现
 
+ SNS关系分两种：follow/fans
+ 
+ 前期通过通讯录，创建人与人间的link关系，通讯录中的人是本人的好友，即本人关注了这些人，同时本人是这些人的fans。
+ 
+ 发布商品，只能对fans或二度fans可见
+ 
  mysql结合Redis实现
  
 ## Redis存储结构
