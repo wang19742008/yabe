@@ -19,7 +19,7 @@ import redis.clients.jedis.Jedis;
  * @author lingkong
  *
  */
-public class SNSService {
+public class SNSService implements ISNSService{
 	private Jedis jedis = RedisHolder.getInstance();
 
 	private final String KEY_TEL_PRE = "t_";
@@ -29,15 +29,7 @@ public class SNSService {
 	private final String KEY_PUBLISH_PRE = "p_";
 	private final String KEY_PUSH_PRE = "c_";
 
-	/**
-	 * 新增用户 - 根据通讯录建立关系
-	 * 
-	 * @param tel
-	 *            当前手机号
-	 * @param contacts
-	 *            通讯录
-	 * @return
-	 */
+
 	public String add(String tel, List<String> contacts) {
 		// 生成新用户
 		String userId = String.valueOf(new Random().nextInt(100));
@@ -45,12 +37,7 @@ public class SNSService {
 		return userId;
 	}
 
-	/**
-	 * 增加联系人
-	 * @param userId
-	 * @param tel
-	 * @param contacts
-	 */
+
 	public void addContacts(String userId, String tel, List<String> contacts) {
 		// build <d>
 		jedis.set(KEY_USERTEL_PRE + tel, userId);
@@ -99,12 +86,7 @@ public class SNSService {
 		}
 	}
 	
-	/**
-	 * 移除联系人
-	 * @param userId
-	 * @param tel
-	 * @param contacts
-	 */
+
 	public void removeContacts(String userId, String tel, List<String> contacts) {
 		for (String t : contacts) {
 			jedis.srem(KEY_TEL_PRE + t, tel);
@@ -129,11 +111,6 @@ public class SNSService {
 		}
 	}
 
-	/**
-	 * 发布商品
-	 * 
-	 * @param userId
-	 */
 	public void publishGoods(String userId, String goodsId) {
 		jedis.lpush(KEY_PUBLISH_PRE + userId, goodsId);
 
@@ -148,44 +125,23 @@ public class SNSService {
 		}
 	}
 
-	/**
-	 * 查看商品列表
-	 * 
-	 * @param userId
-	 * @return
-	 */
+
 	public List<String> findGoods(String userId) {
 		List<String> list = jedis.lrange(KEY_PUSH_PRE + userId, 0, -1);
 		return list;
 	}
 	
-	/**
-	 * 查二度关系
-	 * 商品发布人的fans和当前用户的关注的交集，即朋友的朋友
-	 * @param userId
-	 * @param publishUserId
-	 * @return
-	 */
+
 	public Set<String> findLinkByGoods(String userId, String publishUserId){
 		return jedis.sinter(KEY_FANS_PRE+publishUserId, KEY_FOLLOW_PRE+userId);
 	}
 
-	/**
-	 * 查fans
-	 * 
-	 * @param userId
-	 * @return
-	 */
+
 	public Set<String> findFans(String userId) {
 		return jedis.smembers(KEY_FANS_PRE + userId);
 	}
 
-	/**
-	 * 查关注
-	 * 
-	 * @param userId
-	 * @return
-	 */
+
 	public Set<String> findFollow(String userId) {
 		return jedis.smembers(KEY_FOLLOW_PRE + userId);
 	}
