@@ -1,13 +1,13 @@
-package com.yabe.test.fy;
+package com.yabe.test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import com.yabe.UserService;
 
 /**
  * Unit test for simple App.

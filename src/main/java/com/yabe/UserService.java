@@ -1,4 +1,4 @@
-package com.yabe.test.fy;
+package com.yabe;
 
 import java.util.ArrayList;
 import java.util.List;

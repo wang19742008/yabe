@@ -1,4 +1,4 @@
-package com.yabe.test.fy;
+package com.yabe;
 
 import redis.clients.jedis.Jedis;
 
