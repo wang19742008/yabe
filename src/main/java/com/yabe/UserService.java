@@ -38,7 +38,8 @@ public class UserService {
 	 */
 	public String add(String tel, List<String> contacts){
 		//生成新用户
-		String userId = String.valueOf(new Random().nextInt(100));
+		//String userId = String.valueOf(new Random().nextInt(100));
+		String userId = "13";
 		// build <d>
 		jedis.set(KEY_USERTEL_PRE+tel, userId);
 		// build <a>
@@ -60,8 +61,10 @@ public class UserService {
 		}
 		if(follows.size()>0){
 			jedis.sadd(KEY_FOLLOW_PRE+userId, toArray(follows));
+			for(String id : follows){
+				jedis.sadd(KEY_FANS_PRE+id, userId);
+			}
 		}
-		
 		
 		//维护fans关系
 		Set<String> set = jedis.smembers(KEY_TEL_PRE + tel);
@@ -110,6 +113,14 @@ public class UserService {
 	public List<String> findGoods(String userId){
 		List<String> list = jedis.lrange(KEY_PUSH_PRE + userId, 0, -1);
 		return list;
+	}
+	
+	public Set<String> findFans(String userId){
+		return jedis.smembers(KEY_FANS_PRE+userId);
+	}
+	
+	public Set<String> findFollow(String userId){
+		return jedis.smembers(KEY_FOLLOW_PRE+userId);
 	}
 	
 	private String[] toArray(List<String> list){
