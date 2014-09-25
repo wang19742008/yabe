@@ -10,12 +10,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import com.yabe.core.common.Contents;
-import com.yabe.core.common.RedisHolder;
 import com.yabe.core.dto.Contacts;
 import com.yabe.core.dto.Goods;
 import com.yabe.core.service.SNSService;
 
 public class AppTest extends TestCase {
+	private SNSService service;
 	public AppTest(String testName) {
 		super(testName);
 	}
@@ -26,6 +26,8 @@ public class AppTest extends TestCase {
 
 	@Override
 	protected void setUp() throws Exception {
+		service = new SNSService();
+		service.setRedis(RedisHolder.getInstance());
 		// 清数据
 		Set<String> keys = RedisHolder.getInstance().keys("*");
 		for (String k : keys) {
@@ -43,7 +45,6 @@ public class AppTest extends TestCase {
 	 */
 	public void testAdd() throws Exception {
 		String userId = "";
-		SNSService service = new SNSService();
 		String tel = "";
 		List<Contacts> contacts;
 		/**
@@ -88,7 +89,6 @@ public class AppTest extends TestCase {
 
 	public void testPublishGoods() throws Exception {
 		String userId = "";
-		SNSService service = new SNSService();
 		String tel = "";
 		List<Contacts> contacts;
 		/**

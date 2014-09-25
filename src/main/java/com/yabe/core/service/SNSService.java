@@ -11,7 +11,6 @@ import java.util.Set;
 import redis.clients.jedis.Jedis;
 
 import com.yabe.core.common.Contents;
-import com.yabe.core.common.RedisHolder;
 import com.yabe.core.common.Utils;
 import com.yabe.core.dto.Contacts;
 import com.yabe.core.dto.Goods;
@@ -32,7 +31,7 @@ import com.yabe.core.dto.Goods;
  */
 
 public class SNSService implements ISNSService{
-	private Jedis redis = RedisHolder.getInstance();
+	private Jedis redis;
 
 	private final String KEY_TEL_PRE = "t_";
 	private final String KEY_USERTEL_PRE = "a_";
@@ -248,5 +247,9 @@ public class SNSService implements ISNSService{
 			r.add(goods);
 		}
 		return r;
+	}
+
+	public void setRedis(Jedis redis) {
+		this.redis = redis;
 	}
 }
