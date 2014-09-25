@@ -9,7 +9,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.yabe.core.common.Contents;
+import com.yabe.core.common.Constants;
 import com.yabe.core.dto.Contacts;
 import com.yabe.core.dto.Goods;
 import com.yabe.core.service.SNSService;
@@ -125,7 +125,7 @@ public class AppTest extends TestCase {
 
 		Assert.assertTrue((list2.size() - list1.size()) == 1);
 		Assert.assertTrue(list2.get(0).getId().equals("10000"));
-		Assert.assertTrue(list2.get(0).getLinkType().equals(Contents.LINK_TYPE_1));
+		Assert.assertTrue(list2.get(0).getLinkType().equals(Constants.LINK_TYPE_1));
 		Assert.assertTrue(list2.get(0).getNick().equals("x1"));
 
 		// 二度
@@ -135,7 +135,7 @@ public class AppTest extends TestCase {
 
 		Assert.assertTrue((list2.size() - list1.size()) == 1);
 		Assert.assertTrue(list2.get(0).getId().equals("10001"));
-		Assert.assertTrue(list2.get(0).getLinkType().equals(Contents.LINK_TYPE_2));
+		Assert.assertTrue(list2.get(0).getLinkType().equals(Constants.LINK_TYPE_2));
 		Assert.assertTrue(list2.get(0).getNick()==null);
 
 		// 朋友的朋友

@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import redis.clients.jedis.Jedis;
 
-import com.yabe.core.common.Contents;
+import com.yabe.core.common.Constants;
 import com.yabe.core.common.Utils;
 import com.yabe.core.dto.Contacts;
 import com.yabe.core.dto.Goods;
@@ -66,7 +66,7 @@ public class SNSService implements ISNSService{
 		});
 		//推送商品--只有一度关系
 		for(Goods goods : list){
-			goods.setLinkType(Contents.LINK_TYPE_1);
+			goods.setLinkType(Constants.LINK_TYPE_1);
 		}
 		pushGoods(userId,list);
 		return userId;
@@ -157,10 +157,10 @@ public class SNSService implements ISNSService{
 		// 二度推送--异步
 		Set<String> fans = findFans(userId);
 		for (String uid : fans) {
-			pushGoods(uid,new Goods(goodsId,Contents.LINK_TYPE_1,userId));
+			pushGoods(uid,new Goods(goodsId,Constants.LINK_TYPE_1,userId));
 			Set<String> fans2 = findFans(uid);
 			for (String uid2 : fans2) {
-				pushGoods(uid2,new Goods(goodsId,Contents.LINK_TYPE_2,userId));
+				pushGoods(uid2,new Goods(goodsId,Constants.LINK_TYPE_2,userId));
 			}
 		}
 	}
@@ -198,7 +198,7 @@ public class SNSService implements ISNSService{
 			g.setLinkType(arr[1]);
 			g.setUserId(arr[2]);
 			
-			if(Contents.LINK_TYPE_1.equals(g.getLinkType())){
+			if(Constants.LINK_TYPE_1.equals(g.getLinkType())){
 				g.setNick(getContactsNick(userId,g.getUserId()));
 			}
 			rt.add(g);
