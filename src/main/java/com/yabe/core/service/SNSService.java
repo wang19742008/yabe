@@ -43,7 +43,6 @@ public class SNSService implements ISNSService{
 
 	@Override
 	public String add(String userId,String tel, List<Contacts> contacts)  throws Exception{
-		//String userId = String.valueOf(new Random().nextInt(100));
 		addContacts(userId, tel, contacts);
 		
 		//初始化推送列表
@@ -65,7 +64,7 @@ public class SNSService implements ISNSService{
 		});
 		//推送商品--只有一度关系
 		for(Goods goods : list){
-			goods.setLinkType("1");
+			goods.setLinkType(Contents.LINK_TYPE_1);
 		}
 		pushGoods(userId,list);
 		return userId;
