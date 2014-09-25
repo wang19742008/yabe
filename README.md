@@ -55,3 +55,15 @@ c_100 -> [1^1^2,]
 如:
 n_100_101 -> xx
 ```
+
+## spring引入
+```
+<bean id="redis" class="redis.clients.jedis.Jedis">
+	<constructor-arg>
+		<value>112.124.40.161</value>
+	</constructor-arg>
+</bean>
+<bean id="snsService" class="com.yabe.core.service.SNSService">
+	<property name="redis" ref="redis"></property>
+</bean>
+```
