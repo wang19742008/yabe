@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import redis.clients.jedis.Jedis;
 
 import com.yabe.core.common.Contents;
@@ -165,6 +167,9 @@ public class SNSService implements ISNSService{
 	
 	@Override
 	public void pushGoods(String userId,Goods goods) throws Exception{
+		if(StringUtils.isBlank(userId) || goods == null  || StringUtils.isBlank(goods.getId()) || StringUtils.isBlank(goods.getLinkType()) || StringUtils.isBlank(goods.getUserId())){
+			throw new Exception("param is null");
+		}
 		redis.lpush(KEY_PUSH_PRE + userId, Utils.joinV(goods.getId(),goods.getLinkType(),goods.getUserId()));
 	}
 	

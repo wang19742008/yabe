@@ -39,19 +39,22 @@ public interface ISNSService {
 	 * @param contacts
 	 */
 	public void removeContacts(String userId, String tel, List<Contacts> contacts) throws Exception;
-
+	
 	/**
 	 * 发布商品
-	 * 
 	 * @param userId
+	 * @param goodsId
+	 * @throws Exception
 	 */
 	public void publishGoods(String userId, String goodsId) throws Exception;
-
+	
 	/**
-	 * 查看商品列表
-	 * 
+	 * 查询商品列表
 	 * @param userId
+	 * @param offset
+	 * @param count
 	 * @return
+	 * @throws Exception
 	 */
 	public List<Goods> findGoods(String userId, int offset, int count) throws Exception;
 	
@@ -83,15 +86,13 @@ public interface ISNSService {
 	/**
 	 * 推送商品
 	 * @param userId
-	 * @param goodsId
-	 * @param linkType
-	 * @param sellerId
+	 * @param goods
 	 * @throws Exception
 	 */
 	public void pushGoods(String userId,Goods goods) throws Exception;
 	
 	/**
-	 * 
+	 * 批量推送商品
 	 * @param userId
 	 * @param list
 	 * @throws Exception
