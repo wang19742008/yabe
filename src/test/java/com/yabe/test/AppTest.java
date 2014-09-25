@@ -9,7 +9,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.yabe.core.common.Contents;
 import com.yabe.core.common.RedisHolder;
+import com.yabe.core.dto.Contacts;
+import com.yabe.core.dto.Goods;
 import com.yabe.core.service.SNSService;
 
 public class AppTest extends TestCase {
@@ -28,7 +31,7 @@ public class AppTest extends TestCase {
 		for (String k : keys) {
 			if (k.startsWith("a_") || k.startsWith("t_") || k.startsWith("f_")
 					|| k.startsWith("g_") || k.startsWith("c_")
-					|| k.startsWith("p_")) {
+					|| k.startsWith("p_") || k.startsWith("n_")) {
 				RedisHolder.getInstance().del(k);
 			}
 		}
@@ -36,35 +39,40 @@ public class AppTest extends TestCase {
 
 	/**
 	 * 新增用户case
+	 * @throws Exception 
 	 */
-	public void testAdd() {
+	public void testAdd() throws Exception {
+		String userId = "";
 		SNSService service = new SNSService();
 		String tel = "";
-		List<String> contacts;
+		List<Contacts> contacts;
 		/**
 		 * 用户13601 通讯录： 13602 13603 13604
 		 */
+		userId = "1";
 		tel = "13601";
-		contacts = new ArrayList<String>();
-		contacts.add("13602");
-		contacts.add("13603");
-		contacts.add("13604");
-		String u1 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13602","B"));
+		contacts.add(new Contacts("13603","C"));
+		contacts.add(new Contacts("13604","D"));
+		String u1 = service.add(userId,tel, contacts);
 		/**
 		 * 用户13602 通讯录： 13601
 		 */
+		userId = "2";
 		tel = "13602";
-		contacts = new ArrayList<String>();
-		contacts.add("13601");
-		String u2 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13601","A"));
+		String u2 = service.add(userId,tel, contacts);
 
 		/**
 		 * 用户13603 通讯录： 13602
 		 */
+		userId = "3";
 		tel = "13603";
-		contacts = new ArrayList<String>();
-		contacts.add("13602");
-		String u3 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13602","B3"));
+		String u3 = service.add(userId,tel, contacts);
 
 		Assert.assertTrue(service.findFans(u1).contains(u2));
 		Assert.assertTrue(service.findFans(u2).contains(u1));
@@ -78,47 +86,57 @@ public class AppTest extends TestCase {
 
 	}
 
-	public void testPublishGoods() {
+	public void testPublishGoods() throws Exception {
+		String userId = "";
 		SNSService service = new SNSService();
 		String tel = "";
-		List<String> contacts;
+		List<Contacts> contacts;
 		/**
 		 * 用户13701 通讯录： 13702
 		 */
+		userId = "1";
 		tel = "13701";
-		contacts = new ArrayList<String>();
-		contacts.add("13702");
-		String u1 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13702","x2"));
+		String u1 = service.add(userId,tel, contacts);
 		/**
 		 * 用户13702 通讯录： 13701 13703
 		 */
+		userId = "2";
 		tel = "13702";
-		contacts = new ArrayList<String>();
-		contacts.add("13701");
-		contacts.add("13703");
-		String u2 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13701","x1"));
+		contacts.add(new Contacts("13703","x3"));
+		String u2 = service.add(userId,tel, contacts);
 
 		/**
 		 * 用户13703 通讯录： 13705
 		 */
+		userId = "3";
 		tel = "13703";
-		contacts = new ArrayList<String>();
-		contacts.add("13705");
-		String u3 = service.add(tel, contacts);
+		contacts = new ArrayList<Contacts>();
+		contacts.add(new Contacts("13705","x5"));
+		String u3 = service.add(userId,tel, contacts);
 
 		// 一度
-		List<String> list1 = service.findGoods(u2);
+		List<Goods> list1 = service.findGoods(u2,0,10);
 		service.publishGoods(u1, "10000");
-		List<String> list2 = service.findGoods(u2);
+		List<Goods> list2 = service.findGoods(u2,0,10);
 
 		Assert.assertTrue((list2.size() - list1.size()) == 1);
+		Assert.assertTrue(list2.get(0).getId().equals("10000"));
+		Assert.assertTrue(list2.get(0).getLinkType().equals(Contents.LINK_TYPE_1));
+		Assert.assertTrue(list2.get(0).getNick().equals("x1"));
 
 		// 二度
-		list1 = service.findGoods(u1);
-		service.publishGoods(u3, "10000");
-		list2 = service.findGoods(u1);
+		list1 = service.findGoods(u1,0,10);
+		service.publishGoods(u3, "10001");
+		list2 = service.findGoods(u1,0,10);
 
 		Assert.assertTrue((list2.size() - list1.size()) == 1);
+		Assert.assertTrue(list2.get(0).getId().equals("10001"));
+		Assert.assertTrue(list2.get(0).getLinkType().equals(Contents.LINK_TYPE_2));
+		Assert.assertTrue(list2.get(0).getNick()==null);
 
 		// 朋友的朋友
 		Set<String> set = service.findLinkByGoods(u1, u3);

@@ -53,7 +53,7 @@ public interface ISNSService {
 	 * @param userId
 	 * @return
 	 */
-	public List<String> findGoods(String userId) throws Exception;
+	public List<Goods> findGoods(String userId, int offset, int count) throws Exception;
 	
 	/**
 	 * 查二度关系
@@ -90,5 +90,11 @@ public interface ISNSService {
 	 */
 	public void pushGoods(String userId,Goods goods) throws Exception;
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param list
+	 * @throws Exception
+	 */
 	public void pushGoods(String userId,List<Goods> list) throws Exception;
 }

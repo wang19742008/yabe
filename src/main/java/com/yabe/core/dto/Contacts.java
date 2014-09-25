@@ -8,6 +8,11 @@ package com.yabe.core.dto;
 public class Contacts {
 	private String tel;
 	private String nick;
+	
+	public Contacts(String tel, String nick){
+		this.tel = tel;
+		this.nick = nick;
+	}
 	public String getTel() {
 		return tel;
 	}

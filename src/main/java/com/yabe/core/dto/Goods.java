@@ -1,7 +1,6 @@
 package com.yabe.core.dto;
 
 public class Goods {
-	
 	private String id;
 	private String linkType;
 	private String userId;
