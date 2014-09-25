@@ -9,8 +9,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import com.yabe.RedisHolder;
-import com.yabe.SNSService;
+import com.yabe.core.common.RedisHolder;
+import com.yabe.core.service.SNSService;
 
 public class AppTest extends TestCase {
 	public AppTest(String testName) {
